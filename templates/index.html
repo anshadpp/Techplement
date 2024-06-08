@@ -17,10 +17,11 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-             <h3>Enter your location Below</h3>
-                <form class="d-flex" role="search" action="/search">
-                    <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <h1>Search Quotes</h1>
+                <form action="{% url 'search' %}" method="get">
+                    <label for="author">Search by Author:</label>
+                    <input type="text" id="author" name="author" required>
+                    <button type="submit">Search</button>
                 </form>
 
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,19 +48,29 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    {% endblock banner-slider %}-->
-     {% block information %}
+    {% block information %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quote of the day</title>
+        <link rel="stylesheet" href="{% static  'app/css/style.css' %}">
+        <div class="quote-box">
+            <h2>Quote of the day</h2>
 
-        <div class="containers">
-            <div class="row bg-success text-center p-5 text-white border-bottom shadow">
-                <h1>Quote</h1>
-                <small class="fs-5">
-                    <ul class="fs-5" style="font-family: Rajdhani;">
-                        <li>{{Quotes.text}}</li>
-                        <li>{{Quotes.author}}</li>
-                    </ul>
-                </small>
+            <blockquote>
+            <p>{{ quote.text }}</p>
+            <footer>{{ quote.author }}</footer>
+            </blockquote>
+            <div>
+                <button onclick="getNewQuote()">Get New Quote</button>
+                <script>
+                  function getNewQuote() {
+            // Redirect to the same page to get a new quote
+                     location.reload();
+                     }
+                 </script>
             </div>
+
         </div>
+
     {% endblock information %}
     {% block main-content %}{% endblock main-content %}
     {% block payment-gateway %}{% endblock payment-gateway %}

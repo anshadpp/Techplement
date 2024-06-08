@@ -1,24 +1,28 @@
-    {% extends 'templates/index.html' %}
-    {% load static %}
-    {% block title %}Search Result{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    <form action="{% url 'search' %}" method="get">
+        <label for="author">Search by Author:</label>
+        <input type="text" id="author" name="author" value="{{ request.GET.author }}" required>
+        <button type="submit">Search</button>
+    </form>
 
-    {% block main-content %}
-        <div class="container my-5">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="row">
-                        {% for auth in author %}
-                            <div class="col-sm-4 text-center mb-4 hover-shadow">
-
-                                    <div>
-
-                                        <div class="fw-bold">{{auth.text}}</div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endblock main-content %}
+    {% if quotes %}
+        <h2>Search Results for "{{ request.GET.author }}":</h2>
+        <ul>
+            {% for quote in quotes %}
+                <li>{{ quote.text }} - {{ quote.author }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No quotes found for the specified author.</p>
+    {% endif %}
+</body>
+</html>
